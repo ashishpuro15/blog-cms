@@ -29,4 +29,4 @@ Route::get('/post/show',[PostController::class,'index']);
 
 Route::delete('post/delete/{id}',[PostController::class,'destroy']);
 
-Route::post('post/update/{id}',[PostController::class,'update']);
+Route::put('post/update/{id}',[PostController::class,'update']);

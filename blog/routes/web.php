@@ -2,6 +2,8 @@
 
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\HomeController;
+use App\Http\Controllers\Api\PostController;
 
 /*
 |--------------------------------------------------------------------------
@@ -21,7 +23,9 @@ Route::get('/', function () {
 
 Route::group(['middleware'=>'disable_back_btn'],function(){
     Auth::routes();
-    Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
-    Route::get('blog/create',[App\Http\Controllers\Api\PostController::class,'create']);
-    Route::get('blog/edit/{id}',[App\Http\Controllers\Api\PostController::class,'edit']);
+    Route::get('/home', [HomeController::class, 'index'])->name('home');
+    Route::get('blog/list',[PostController::class,'display']);
+    Route::get('blog/create',[PostController::class,'create']);
+    Route::get('blog/show/{id}',[PostController::class,'show']);
+    Route::get('blog/edit/{id}',[PostController::class,'edit']);
 });

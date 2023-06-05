@@ -13,6 +13,10 @@ class PostController extends Controller
     /**
      * Display a listing of the resource.
      */
+    public function display(){
+        $posts=Post::all();
+        return view('blogs.index')->with('posts',$posts);
+    }
     public function index()
     {
         $posts=Post::all();
@@ -31,7 +35,8 @@ class PostController extends Controller
                 'status'=>0,
             ];
         }
-            return view('home')->with('posts',$posts);
+        
+            // return view('home')->with('posts',$posts);
             // return response()->json($response, 200);
     }
     
@@ -68,7 +73,7 @@ class PostController extends Controller
             try{
                 $post=Post::create($data);
                 DB::commit();
-                return redirect('home')->with('status','Post created successfully');
+                return redirect('blog/list')->with('message','Post created successfully');
             } catch(\Exception $e){
                 p($e->getMessage());
                 $post=null;
@@ -90,7 +95,8 @@ class PostController extends Controller
      */
     public function show(string $id)
     {
-        //
+        $post=Post::find($id);
+        return view('blogs.show')->with('post',$post);
     }
 
     /**
@@ -124,7 +130,7 @@ class PostController extends Controller
                     $post->publication_date=$request['publication_date'];
                     $post->save();
                     DB::commit();
-                    return redirect('/home')->with('success','Post updated successfully');
+                    return redirect('blog/list')->with('message','Post updated successfully');
                 }
                 catch(\Exception $err){
                     DB::rollBack();
@@ -180,7 +186,7 @@ class PostController extends Controller
                     $respCode=500;
                 }
         }
-        return redirect('home')->with('status','Post deleted successfully');
-        // return response()->json($response,$respCode);
+                    return redirect('blog/list')->with('message','Post deleted successfully');
+                    // return response()->json($response,$respCode);
     }
 }
